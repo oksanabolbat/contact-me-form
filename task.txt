@@ -1,0 +1,21 @@
+https://hackernoon.com/10-frontend-projects-to-take-your-coding-skills-to-the-next-level
+In this frontend project, you'll build a responsive contact us form. In addition, you will integrate an external API that will allow you to receive submissions from the Contact Form directly in your email inbox using the Contact Form API.
+
+Project Requirements
+All fields are required and must be validated.
+The email field must be validated to ensure it is a valid email address format.
+The form should display a success message to the user after the form is submitted.
+The form should also display an error message if there are any issues with the form submission, such as an invalid email address or missing fields.
+The form should be responsive and should adjust to different screen sizes.
+Show the hover state of all the elements.
+The form should use the Contact Form API to send a form submission response to the email inbox.
+Learning outcomes
+Upon completing the Contact Us Form front-end project, you will acquire various skills and knowledge in front-end web development. You'll learn to implement form validation techniques to ensure accurate and complete form data submissions. You will also learn to integrate external APIs to securely send data from your website to a server using an API.
+
+This project will provide an opportunity for developers to develop a portfolio-ready project to showcase their technical skills and problem-solving ability.
+
+Resources to help complete the project
+Contact Form API Docs https://docs.web3forms.com/getting-started/installation?ref=hackernoon.com
+How to build a Contact Us Form using HTML & JavaScript https://docs.web3forms.com/how-to-guides/html-and-javascript?ref=hackernoon.com
+Form Input Element Docs https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input?ref=hackernoon.com
+How to Make a POST Request using Fetch() method https://www.freecodecamp.org/news/how-to-make-api-calls-with-fetch/?ref=hackernoon.com
