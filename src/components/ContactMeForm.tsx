@@ -36,8 +36,14 @@ export default function ContactMeForm({ showModal }: Props) {
 
     const handleSubmitForm = (event: React.FormEvent) => {
         event.preventDefault();
-        if (emailIsNotValid || subjectIsNotValid || messageIsNotValid) {
-            //show modal
+        if (
+            emailIsNotValid ||
+            subjectIsNotValid ||
+            messageIsNotValid ||
+            emailValue.length === 0 ||
+            subjectValue.length === 0 ||
+            messageValue.length === 0
+        ) {
             showModal();
             return;
         }
