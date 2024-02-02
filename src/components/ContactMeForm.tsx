@@ -2,7 +2,11 @@ import { useInput } from "../hooks/useInput";
 import { isEmailValid } from "../util/validation";
 import Input from "./Input";
 
-export default function ContactMeForm() {
+interface Props {
+    showModal: () => void;
+}
+
+export default function ContactMeForm({ showModal }: Props) {
     const {
         enteredValue: emailValue,
         handleChange: handleEmailChange,
@@ -29,8 +33,18 @@ export default function ContactMeForm() {
         defaultValue: "",
         validateFn: (val: string) => val.trim().length > 3,
     });
+
+    const handleSubmitForm = (event: React.FormEvent) => {
+        event.preventDefault();
+        if (emailIsNotValid || subjectIsNotValid || messageIsNotValid) {
+            //show modal
+            showModal();
+            return;
+        }
+    };
+
     return (
-        <form className="px-24 py-8">
+        <form className="px-24 py-8" onSubmit={handleSubmitForm}>
             <Input
                 id="email"
                 label="Email address"
