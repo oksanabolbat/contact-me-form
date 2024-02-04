@@ -1,17 +1,34 @@
+import { useRef } from "react";
 import { useInput } from "../hooks/useInput";
+import Button from "./shared/Button";
 import { isEmailValid } from "../util/validation";
 import Input from "./Input";
+import { sendMessage } from "../sendMessage";
 
 interface Props {
     showModal: () => void;
+    handleConfirmForm: (isSuccess: boolean) => void;
 }
 
-export default function ContactMeForm({ showModal }: Props) {
+export default function ContactMeForm({ showModal, handleConfirmForm }: Props) {
+    const formRef = useRef<HTMLFormElement>(null);
+    const {
+        enteredValue: nameValue,
+        handleChange: handleNameChange,
+        handleBlur: handleNameBlur,
+        isNotValid: nameIsNotValid,
+        clearEnteredValue: clearNameValue,
+    } = useInput({
+        defaultValue: "",
+        validateFn: (val: string) => val.trim().length > 3,
+    });
+
     const {
         enteredValue: emailValue,
         handleChange: handleEmailChange,
         handleBlur: handleEmailBlur,
         isNotValid: emailIsNotValid,
+        clearEnteredValue: clearEmailValue,
     } = useInput({ defaultValue: "", validateFn: isEmailValid });
 
     const {
@@ -19,6 +36,7 @@ export default function ContactMeForm({ showModal }: Props) {
         handleChange: handleSubjectChange,
         handleBlur: handleSubjectBlur,
         isNotValid: subjectIsNotValid,
+        clearEnteredValue: clearSubjectValue,
     } = useInput({
         defaultValue: "",
         validateFn: (val: string) => val.trim().length > 3,
@@ -29,28 +47,67 @@ export default function ContactMeForm({ showModal }: Props) {
         handleChange: handleMessageChange,
         handleBlur: handleMessageBlur,
         isNotValid: messageIsNotValid,
+        clearEnteredValue: clearMessageValue,
     } = useInput({
         defaultValue: "",
         validateFn: (val: string) => val.trim().length > 3,
     });
+    const clearForm = () => {
+        clearEmailValue();
+        clearMessageValue();
+        clearNameValue();
+        clearSubjectValue();
+    };
 
-    const handleSubmitForm = (event: React.FormEvent) => {
+    const handleSubmitForm = async (event: React.FormEvent) => {
         event.preventDefault();
         if (
             emailIsNotValid ||
             subjectIsNotValid ||
             messageIsNotValid ||
+            nameIsNotValid ||
             emailValue.length === 0 ||
             subjectValue.length === 0 ||
-            messageValue.length === 0
+            messageValue.length === 0 ||
+            nameValue.length === 0
         ) {
             showModal();
             return;
+        } else {
+            try {
+                console.log("try");
+                const respOk = await sendMessage({
+                    name: nameValue,
+                    email: emailValue,
+                    subject: subjectValue,
+                    message: messageValue,
+                });
+                if (!respOk) {
+                    throw new Error("Please try later");
+                } else {
+                    handleConfirmForm(true);
+                    //clearForm();
+                }
+            } catch (error) {
+                //show error
+                console.log(error);
+                handleConfirmForm(false);
+            }
         }
     };
 
     return (
-        <form className="px-24 py-8" onSubmit={handleSubmitForm}>
+        <form className="px-24 py-8" onSubmit={handleSubmitForm} ref={formRef}>
+            <Input
+                id="name"
+                label="Name"
+                name="name"
+                handleBlur={handleNameBlur}
+                handleChange={handleNameChange}
+                value={nameValue}
+                error={nameIsNotValid ? "Please enter valid name" : " "}
+            />
+
             <Input
                 id="email"
                 label="Email address"
@@ -83,9 +140,7 @@ export default function ContactMeForm({ showModal }: Props) {
                 value={messageValue}
                 error={messageIsNotValid ? "Please enter some message" : " "}
             />
-            <button className="bg-cyan-500 rounded-md py-3 px-3 w-full text-white text-center hover:bg-blue-500">
-                Send
-            </button>
+            <Button>Send</Button>
         </form>
     );
 }

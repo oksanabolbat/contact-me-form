@@ -1,4 +1,5 @@
-import { useRef, MouseEvent } from "react";
+import { useRef, MouseEvent, useEffect } from "react";
+import Button from "./shared/Button";
 
 interface Props {
     message: string;
@@ -6,6 +7,17 @@ interface Props {
 }
 const Modal = ({ message, handleClose }: Props) => {
     const backdropRef = useRef<HTMLDivElement>(null);
+    const handleCloseRef = useRef(handleClose);
+    handleCloseRef.current = handleClose;
+    useEffect(() => {
+        const handleEscapeClose = (e: KeyboardEvent) => {
+            if (e.code === "Escape") {
+                handleCloseRef.current();
+            }
+        };
+        window.addEventListener("keydown", handleEscapeClose);
+        return () => window.removeEventListener("keydown", handleEscapeClose);
+    }, []);
 
     const handleBackdropClick = (event: MouseEvent) => {
         if (event.target === backdropRef.current) {
@@ -21,16 +33,11 @@ const Modal = ({ message, handleClose }: Props) => {
         >
             <dialog
                 onClose={handleClose}
-                className="block w-1/3 h-1/3 rounded-2xl p-16 text-center  font-sans font-bold text-lg "
+                className="flex flex-col justify-center gap-10 w-1/3 h-1/3 rounded-2xl p-16 text-center  font-sans font-bold text-lg "
             >
                 <h3>{message} </h3>
                 <form method="dialog">
-                    <button
-                        className="bg-cyan-500 rounded-md py-3 px-3 text-white text-center hover:bg-blue-500 w-2/3 mt-16"
-                        onClick={handleClose}
-                    >
-                        OK
-                    </button>
+                    <Button onClick={handleClose}>OK</Button>
                 </form>
             </dialog>
         </div>

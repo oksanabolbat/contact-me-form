@@ -17,6 +17,16 @@ export const useInput = ({ defaultValue, validateFn }: Props) => {
         setDidEdited(true);
     };
 
+    const clearEnteredValue = () => {
+        setEnteredValue("");
+        setDidEdited(false);
+    };
     const isNotValid = didEdited && !validateFn(enteredValue);
-    return { enteredValue, handleChange, handleBlur, isNotValid };
+    return {
+        enteredValue,
+        handleChange,
+        handleBlur,
+        isNotValid,
+        clearEnteredValue,
+    };
 };

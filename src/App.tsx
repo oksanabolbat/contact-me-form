@@ -1,15 +1,24 @@
 import { useState } from "react";
 import ContactMeForm from "./components/ContactMeForm";
 import Modal from "./components/Modal";
+import MessageSentModal from "./components/MessageSentModal";
 
 function App() {
     const [showModal, setShowModal] = useState(false);
+    const [isSent, setIsSent] = useState<boolean | null>(null);
     const handleConfirmWarning = () => {
         setShowModal(true);
     };
+    const handleConfirmForm = (isOk: boolean) => {
+        console.log("handle", isOk);
+
+        setIsSent(isOk);
+    };
+
     const closeModal = () => {
         setShowModal(false);
     };
+    console.log("showModal", showModal);
     return (
         <div className="w-[12 00px] bg-gradient-to-r from-cyan-500 to-blue-500 p-24 mx-auto rounded-lg font-sans ">
             {showModal && (
@@ -17,6 +26,10 @@ function App() {
                     message="Please enter valid data!"
                     handleClose={closeModal}
                 />
+            )}
+
+            {(isSent === true || isSent === false) && (
+                <MessageSentModal isSuccess={isSent} />
             )}
 
             {
@@ -29,7 +42,10 @@ function App() {
                         CODINGSPACE or you can just say hi. I will get back to
                         you as soon as I can.
                     </p>
-                    <ContactMeForm showModal={handleConfirmWarning} />
+                    <ContactMeForm
+                        showModal={handleConfirmWarning}
+                        handleConfirmForm={handleConfirmForm}
+                    />
                 </div>
             }
         </div>
