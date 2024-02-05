@@ -76,7 +76,6 @@ export default function ContactMeForm({ showModal, handleConfirmForm }: Props) {
             return;
         } else {
             try {
-                console.log("try");
                 const respOk = await sendMessage({
                     name: nameValue,
                     email: emailValue,

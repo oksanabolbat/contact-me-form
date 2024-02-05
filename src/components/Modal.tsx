@@ -33,7 +33,7 @@ const Modal = ({ message, handleClose }: Props) => {
         >
             <dialog
                 onClose={handleClose}
-                className="flex flex-col justify-center gap-10 w-1/3 h-1/3 rounded-2xl p-16 text-center  font-sans font-bold text-lg "
+                className="flex flex-col justify-center gap-10 min-w-[300px] min-h-[300px] rounded-2xl p-16 text-center  font-sans font-bold text-lg "
             >
                 <h3>{message} </h3>
                 <form method="dialog">

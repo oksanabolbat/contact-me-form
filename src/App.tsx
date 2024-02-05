@@ -26,7 +26,7 @@ function App() {
     };
 
     return (
-        <div className="w-full h-screen bg-gradient-to-r from-cyan-500 to-blue-500 font-sans flex items-center">
+        <div className="w-full h-screen bg-gradient-to-r from-cyan-500 to-blue-500 font-sans flex items-center justify-center">
             {showModal && (
                 <Modal
                     message="Please enter valid data!"
@@ -37,7 +37,7 @@ function App() {
             <MessageSentModal isSuccess={isSent} show={showSentModal} />
 
             {
-                <div className="bg-white w-[600px]  drop-shadow-2xl rounded-lg p-5">
+                <div className="bg-white w-[600px]  drop-shadow-2xl rounded-lg p-5 m-4">
                     <h1 className="text-3xl font-bold text-center mb-10">
                         Send me a message
                     </h1>
