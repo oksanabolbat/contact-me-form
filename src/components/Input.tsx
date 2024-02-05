@@ -22,7 +22,7 @@ export default function Input({
     ...props
 }: Props) {
     return (
-        <>
+        <div className="max-w-88 my-0 mx-auto">
             {isTextarea ? (
                 <textarea
                     name={name}
@@ -52,6 +52,6 @@ export default function Input({
             <div className="text-red-400 h-7">
                 <p>{error || " "} </p>
             </div>
-        </>
+        </div>
     );
 }

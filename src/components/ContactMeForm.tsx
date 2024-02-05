@@ -61,6 +61,7 @@ export default function ContactMeForm({ showModal, handleConfirmForm }: Props) {
 
     const handleSubmitForm = async (event: React.FormEvent) => {
         event.preventDefault();
+
         if (
             emailIsNotValid ||
             subjectIsNotValid ||
@@ -86,18 +87,16 @@ export default function ContactMeForm({ showModal, handleConfirmForm }: Props) {
                     throw new Error("Please try later");
                 } else {
                     handleConfirmForm(true);
-                    //clearForm();
+                    clearForm();
                 }
             } catch (error) {
-                //show error
-                console.log(error);
                 handleConfirmForm(false);
             }
         }
     };
 
     return (
-        <form className="px-24 py-8" onSubmit={handleSubmitForm} ref={formRef}>
+        <form className=" py-6" onSubmit={handleSubmitForm} ref={formRef}>
             <Input
                 id="name"
                 label="Name"

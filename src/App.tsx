@@ -6,21 +6,27 @@ import MessageSentModal from "./components/MessageSentModal";
 function App() {
     const [showModal, setShowModal] = useState(false);
     const [isSent, setIsSent] = useState<boolean | null>(null);
+    const [showSentModal, setShowSentModal] = useState(false);
     const handleConfirmWarning = () => {
         setShowModal(true);
     };
     const handleConfirmForm = (isOk: boolean) => {
-        console.log("handle", isOk);
-
         setIsSent(isOk);
+        setShowSentModal(true);
     };
+
+    if (showSentModal) {
+        setTimeout(() => {
+            setShowSentModal(false);
+        }, 5000);
+    }
 
     const closeModal = () => {
         setShowModal(false);
     };
-    console.log("showModal", showModal);
+
     return (
-        <div className="w-[12 00px] bg-gradient-to-r from-cyan-500 to-blue-500 p-24 mx-auto rounded-lg font-sans ">
+        <div className="w-full h-screen bg-gradient-to-r from-cyan-500 to-blue-500 font-sans flex items-center">
             {showModal && (
                 <Modal
                     message="Please enter valid data!"
@@ -28,12 +34,10 @@ function App() {
                 />
             )}
 
-            {(isSent === true || isSent === false) && (
-                <MessageSentModal isSuccess={isSent} />
-            )}
+            <MessageSentModal isSuccess={isSent} show={showSentModal} />
 
             {
-                <div className="bg-white w-[600px] py-7 mx-auto drop-shadow-md rounded-lg p-5">
+                <div className="bg-white w-[600px]  drop-shadow-2xl rounded-lg p-5">
                     <h1 className="text-3xl font-bold text-center mb-10">
                         Send me a message
                     </h1>
